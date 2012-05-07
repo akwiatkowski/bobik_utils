@@ -21,7 +21,7 @@ def decode(file)
 end
 
 def decode_musepack(file)
-  output = replace_ext(file, "wave")
+  output = replace_ext(file, "wave").gsub(/,/,'_')
   # should work, but i had fucked up decoding libraries
   #puts "mpcdec -i \"#{file}\" \"#{output}\""
   puts "mplayer \"#{file}\" -ao pcm:file=\"#{output}\""
@@ -36,14 +36,14 @@ def encode(file, ext)
   end
 end
 
-def encode_ogg(file)
-  temp = replace_ext(file, "wave")
-  output = replace_ext(file, "ogg")
-  puts "oggenc -q10 \"#{temp}\" -o \"#{output}\""
+def encode_ogg(file, quality = 4)
+  temp = replace_ext(file, "wave").gsub(/,/,'_')
+  output = replace_ext(file, "ogg").gsub(/,/,'_')
+  puts "oggenc -q#{quality} \"#{temp}\" -o \"#{output}\""
 end
 
 def remove_tmp(file)
-  output = replace_ext(file, "wave")
+  output = replace_ext(file, "wave").gsub(/,/,'_')
   puts "rm \"#{output}\""
 end
 
