@@ -47,9 +47,17 @@ def remove_tmp(file)
   puts "rm \"#{output}\""
 end
 
+def move_to_other_location(file, ext)
+  dir = file.gsub(/[^\/]+$/,'')
+  output = replace_ext(file, ext).gsub(/,/,'_')
+  puts "mkdir -p \"1DONE/#{dir}\""
+  puts "mv \"#{output}\" \"./1DONE/#{dir}/\""
+end
+
 search_files("mpc").sort.each do |f|
   puts "\n# --- #{f}"
   decode(f)
   encode(f, "ogg")
   remove_tmp(f)
+  move_to_other_location(f, "ogg")
 end
