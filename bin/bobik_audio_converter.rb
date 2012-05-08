@@ -34,12 +34,14 @@ def decode(file)
   case ext(file)
     when 'wtf' then
       puts "Wtf man ;)"
-    # musepack library is currently fucked up on my pc
-    #when 'mpc' then
-    #  decode_musepack(file)
-    else
+    when 'wv' then
+      decode_wavpack(file)
+    when 'mpc' then
+      #decode_musepack(file)
       decode_using_mplayer(file)
-    #puts "#{ext(file)} is not supported"
+    else
+      #puts "#{ext(file)} is not supported"
+      decode_using_mplayer(file)
   end
 end
 
@@ -47,6 +49,11 @@ def decode_musepack(file)
   output = replace_ext(file, "wave").gsub(/,/, '_')
   # should work, but i had fucked up decoding libraries
   puts "mpcdec -i \"#{file}\" \"#{output}\""
+end
+
+def decode_wavpack(file)
+  output = replace_ext(file, "wave").gsub(/,/, '_')
+  puts "wvunpack \"#{file}\" -o \"#{output}\""
 end
 
 def decode_using_mplayer(file)
