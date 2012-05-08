@@ -54,6 +54,7 @@ end
 def decode_wavpack(file)
   output = replace_ext(file, "wave").gsub(/,/, '_')
   puts "wvunpack \"#{file}\" -o \"#{output}\""
+  puts "mv \"#{output}.wav\" \"#{output}\""
 end
 
 def decode_using_mplayer(file)
